@@ -1,0 +1,19 @@
+services:
+  mysqldb:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=matheus
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+      - mysqlVolume:/var/lib/mysql
+      - mysqlConfig:/etc/mysql
+  docker-python:
+    build:
+      context: .
+    ports:
+      - 3000:5000
+    depends_on:
+      - mysqldb
+volumes:
+  mysqlVolume:
+  mysqlConfig:
